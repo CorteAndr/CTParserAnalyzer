@@ -121,7 +121,7 @@ class TestLayer1(unittest.TestCase):
         structures = parser.get_structures("examples/calcular_cambio.py")
         self.assertDictEqual(structures,
                              {
-                                 ProgElement.SEQUENCE: {2},
+                                 ProgElement.SEQUENCE: {2, 5},
                                  ProgElement.SELECTION: {2,6,10,13},
                                  ProgElement.VARIABLES: {5, 8, 9, 12},
                                  ProgElement.EXPRESSIONS: {5, 8, 9, 12},
@@ -153,6 +153,90 @@ class TestLayer1(unittest.TestCase):
                                 ProgElement.FUNCTIONS_PROCEDURES: {1},
                                 ProgElement.PARAMETERS_RETURNS: {1,5,6},
                                 ProgElement.INPUT: {2}
+                             })
+
+    def test_7_nombres(self):
+        structures = parser.get_structures("examples/7_nombres.py")
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.SEQUENCE: {1, 5},
+                                 ProgElement.ITERATION: {4},
+                                 ProgElement.VARIABLES: {2, 3, 6},
+                                 ProgElement.EXPRESSIONS: {2, 3, 6},
+                                 ProgElement.INPUT: {2},
+                                 ProgElement.OUTPUT: {1, 5}
+                             })
+
+    def test_suma_de_6(self):
+        structures = parser.get_structures("examples/suma_de_6.py")
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.SEQUENCE: {1, 4},
+                                 ProgElement.SELECTION: {6},
+                                 ProgElement.ITERATION: {3},
+                                 ProgElement.VARIABLES: {1, 2, 5, 9, 10},
+                                 ProgElement.DATA_TYPES: {5},
+                                 ProgElement.EXPRESSIONS: {1, 2, 5, 9, 10},
+                                 ProgElement.INPUT: {5},
+                                 ProgElement.OUTPUT: {4, 11}
+                             })
+
+    def test_mayuscula(self):
+        structures = parser.get_structures("examples/mayuscula.py")
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.SEQUENCE: {2},
+                                 ProgElement.SELECTION: {4},
+                                 ProgElement.ITERATION: {3},
+                                 ProgElement.VARIABLES: {2,3,5,7},
+                                 ProgElement.EXPRESSIONS: {2, 5, 7},
+                                 ProgElement.FUNCTIONS_PROCEDURES: {1},
+                                 ProgElement.PARAMETERS_RETURNS: {1, 8}
+                             })
+
+    def test_intercambiar(self):
+        structures = parser.get_structures("examples/intercambiar.py")
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.SEQUENCE: {4, 5},
+                                 ProgElement.VARIABLES: {5,6,7,10,11,12,14},
+                                 ProgElement.EXPRESSIONS: {5,6,7,10,11,12,14},
+                                 ProgElement.DATA_STRUCTS: {8, 12},
+                                 ProgElement.FUNCTIONS_PROCEDURES: {4},
+                                 ProgElement.PARAMETERS_RETURNS: {4, 8},
+                                 ProgElement.FUNCTION_CALL: {14},
+                                 ProgElement.OUTPUT: {13, 15}
+                             })
+
+    def test_juego_en_ka_feria(self):
+        structures = parser.get_structures("examples/juego_en_la_feria.py")
+        print(structures)
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.SEQUENCE: {1, 6, 11, 13, 20, 25},
+                                 ProgElement.SELECTION: {8, 12, 19, 22, 24},
+                                 ProgElement.ITERATION: {5},
+                                 ProgElement.VARIABLES: {1,2,3,7,9,11,14,15,17,21,23,26},
+                                 ProgElement.DATA_TYPES: {7, 14},
+                                 ProgElement.EXPRESSIONS: {1,2,3,7,9,11,14,15,17,21,23,26},
+                                 ProgElement.INPUT: {7, 14},
+                                 ProgElement.OUTPUT: {6, 13, 20, 25, 27}
+                             })
+    def test_leer_el_contenido_de_un_archivo(self):
+        structures = parser.get_structures("examples/leer_el_contenido_de_un_archivo.py")
+        self.assertDictEqual(structures,
+                            {
+                                ProgElement.VARIABLES: {2},
+                                ProgElement.FUNCTIONS_PROCEDURES: {1},
+                                ProgElement.PARAMETERS_RETURNS: {1, 3},
+                                ProgElement.INPUT: {2, 3}
+                            })
+    def test_trampolin_mejorado(self):
+        structures = parser.get_structures("examples/trampolin_mejorado.py")
+        self.assertDictEqual(structures,
+                             {
+                                 ProgElement.VARIABLES: {1},
+                                 ProgElement.OUTPUT: {1, 2}
                              })
 
 if __name__ == '__main__':

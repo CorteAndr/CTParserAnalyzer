@@ -22,6 +22,13 @@ NODE_CATEGORIES = {
     ast.Assert: (ProgElement.TESTING,),
 }
 
+BUILTIN_METHODS = {
+    attr_name
+    for obj in vars(builtins).values()
+    if isinstance(obj, type)
+    for attr_name in dir(obj)
+    if not attr_name.startswith('__')
+}
 
 def get_structures(file_path):
 
@@ -67,9 +74,11 @@ def get_structures(file_path):
             name = node.func.id if isinstance(node.func, ast.Name) else None
             # Function without a name/error?
             if name is None:
-                pass
+                # Check if run using attribute instead
+                if isinstance(node.func, ast.Attribute):
+                    name = node.func.attr
             # Function call to output
-            elif name in {"print", "write"}:
+            if name in {"print", "write"}:
                 structures[ProgElement.OUTPUT].add(node.lineno)
             # Function call to input
             elif name in {"input", "read"}:
@@ -92,7 +101,7 @@ def get_structures(file_path):
 
 
             # Not a standard python function
-            elif not callable(getattr(builtins, name, None)): 
+            elif not callable(getattr(builtins, name, None)) and name not in BUILTIN_METHODS: 
                 structures[ProgElement.FUNCTION_CALL].add(node.lineno)
 
     return structures
