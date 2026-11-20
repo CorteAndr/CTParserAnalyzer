@@ -41,14 +41,13 @@ def get_structures(file_path):
         # Conditional relations
 
         # A sequence starts where a block contains at least two statements.
-        if not isinstance(node, ast.If):
-            for statements in (
-                body,
-                getattr(node, "orelse", None),
-                getattr(node, "finalbody", None),
-            ):
-                if isinstance(statements, list) and len(statements) >= 2:
-                    structures[ProgElement.SEQUENCE].add(statements[0].lineno)
+        for statements in (
+            body,
+            getattr(node, "orelse", None),
+            getattr(node, "finalbody", None),
+        ):
+            if isinstance(statements, list) and len(statements) >= 2:
+                structures[ProgElement.SEQUENCE].add(statements[0].lineno)
             
         # Check if a function has arguments
         if isinstance(node, ast.FunctionDef):
